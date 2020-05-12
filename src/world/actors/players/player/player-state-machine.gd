@@ -1,34 +1,24 @@
 extends StateMachine
 
 func _ready():
-	addState("idle")
-	addState("move")
-	call_deferred("setState", states.idle)
-	
-func _stateLogic(_delta):
-	parent.handleInput()
+	statesMap = {
+		"idle": $Idle,
+		"move": $Move,
+	}
 
-func _getTransition(_delta):
-	match currentState:
-		states.idle:
-			if Input.get_action_strength("ui_right"):
-				return states.move
-		states.move:
-			if Input.get_action_strength("ui_left"):
-				return states.idle
+func _changeState(newState):
+	._changeState(newState)
 	
-	return null
-
-func _onEnterState(newState, _oldState):
-	match newState:
-		states.idle:
-			print("enter states.idle")
-		states.move:
-			print("enter states.move")
-	
-func _onExitState(oldState, _newState):
-	match oldState:
-		states.idle:
-			print("exit states.idle")
-		states.move:
-			print("exit states.move")
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_left"):
+		_changeState("idle")
+		return
+	if event.is_action_pressed("ui_right"):
+		_changeState("move")
+		return
+	if event.is_action_pressed("ui_down"):
+		statesStack.push_front($Move)
+		return
+	if event.is_action_pressed("ui_up"):
+		_changeState("previous")
+		return

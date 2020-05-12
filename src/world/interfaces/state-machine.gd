@@ -1,37 +1,53 @@
+class_name StateMachine
 extends Node
 
-class_name StateMachine
+signal stateChanged(newState)
 
-var currentState = null setget setState
-var previousState = null
-var states = {}
+export(NodePath) var initialState
+var statesMap = {}
+var statesStack = []
+var currentState = null
+var isActive = false setget setIsActive
 
-onready var parent = get_parent()
+# Intialize state and connect stateFinished signals of all states
+func _ready():
+	for child in get_children():
+		child.connect("stateFinished", self, "_changeState")
+	initialize(initialState)
+
+func _unhandled_input(event):
+	currentState.handleInput(event)
 
 func _physics_process(delta):
-	if currentState != null:
-		_stateLogic(delta)
-		setState(_getTransition(delta))
-		
-func _stateLogic(_delta):
-	pass
-
-func _getTransition(_delta):
-	return null
-
-func _onEnterState(_newState, _oldState):
-	pass
+	currentState.update(delta)
 	
-func _onExitState(_oldState, _newState):
-	pass
-	
-func setState(newState):
-	if newState != null:
-		previousState = currentState
-		currentState = newState
-		if previousState != null:
-			_onExitState(previousState, newState)
-		_onEnterState(newState, previousState)
+func initialize(initialState):
+	setIsActive(true)
+	statesStack.push_front(get_node(initialState))
+	currentState = statesStack[0]
+	currentState.enter()
 
-func addState(newState):
-	states[newState] = states.size()
+func setIsActive(value):
+	isActive = value
+	set_physics_process(value)
+	set_process_unhandled_input(value)
+	set_block_signals(not value)
+	if not isActive:
+		statesStack = []
+		currentState = null
+
+func _changeState(newState):
+	if not isActive:
+		return
+	currentState.exit()
+	
+	if newState == "previous":
+		statesStack.pop_front()
+	else:
+		statesStack[0] = statesMap[newState]
+	
+	currentState = statesStack[0]
+	emit_signal("stateChanged", newState)
+	
+	if newState != "previous":
+		currentState.enter()
