@@ -1,6 +1,6 @@
-class_name State
 extends Node
 
+# warning-ignore:unused_signal
 signal stateFinished(nextState)
 
 # Initialize the state. E.g. change the animation
@@ -11,9 +11,9 @@ func enter():
 func exit():
 	return
 
-func handleInput(event):
+func handleInput(_event):
 	return
 
 # Called each tick of _physics_process()
-func update(delta):
+func update(_delta):
 	return

@@ -1,9 +1,10 @@
-extends StateMachine
+extends "res://world/scripts/state-machine.gd"
 
 func _ready():
 	statesMap = {
 		"idle": $Idle,
 		"move": $Move,
+		"attack": $Attack,
 	}
 
 func _changeState(newState):
@@ -17,7 +18,7 @@ func _unhandled_input(event):
 		_changeState("move")
 		return
 	if event.is_action_pressed("ui_down"):
-		statesStack.push_front($Move)
+		pushState("attack")
 		return
 	if event.is_action_pressed("ui_up"):
 		_changeState("previous")

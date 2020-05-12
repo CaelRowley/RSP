@@ -1,4 +1,4 @@
-extends State
+extends "res://world/scripts/state.gd"
 
 func enter():
 	print('enter idle')
