@@ -3,30 +3,35 @@ extends Node
 signal stateChanged(newState)
 
 export(NodePath) var initialState
-var statesMap = {}
+var statesMap = {} setget setStatesMap
 var statesStack = []
-var currentState = null
 var isActive = false setget setIsActive
+var currentState = null
 
-# Intialize state and connect stateFinished signals of all states
+# Intialize state and connect stateFinished signals of all child states
 func _ready():
-	print('test')
 	for child in get_children():
-		child.connect("stateFinished", self, "_changeState")
+		child.connect("stateFinished", self, "changeState")
 	initialize(initialState)
 
+# Pass user input event to the current state node
 func _unhandled_input(event):
-	currentState.handleInput(event)
+	currentState._handleInput(event)
 
+# Pass physics process to the current state node
 func _physics_process(delta):
-	currentState.update(delta)
+	currentState._update(delta)
 	
+
 func initialize(newState):
 	setIsActive(true)
 	statesStack.push_front(get_node(newState))
 	currentState = statesStack[0]
 	currentState.enter()
 	emit_signal("stateChanged", statesStack)
+	
+func setStatesMap(newStatesMap):
+	statesMap = newStatesMap
 
 func setIsActive(value):
 	isActive = value
@@ -37,19 +42,17 @@ func setIsActive(value):
 		statesStack = []
 		currentState = null
 
-func pushState(newState):
-	if not isActive:
-		return
-	statesStack.push_front(statesMap[newState])
-	_changeState(newState)
-		
-func _changeState(newState):
+func changeState(newState):
 	if not isActive:
 		return
 	
 	if newState == "previous":
-		if statesStack.size() < 2:
-			var error = str('ERROR: Cannot call previous state. statesStack.size(): ', statesStack.size(), ', node: ', get_parent().get_name())
+		# Cannot access previous state if there is only 1 state
+		if statesStack.size() <= 1:
+			var error = str(
+				'ERROR (node: ', get_parent().get_name(), '):',
+				'Cannot call previous state. statesStack.size(): ', statesStack.size()
+			)
 			printerr(error)
 			push_error(error)
 			return
@@ -60,6 +63,7 @@ func _changeState(newState):
 	currentState.exit()
 	currentState = statesStack[0]
 
+	# Should not call enter() when returning to a previous state
 	if newState != "previous":
 		currentState.enter()
 		

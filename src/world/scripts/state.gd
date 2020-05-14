@@ -11,9 +11,10 @@ func enter():
 func exit():
 	return
 
-func handleInput(_event):
+#  Called each tick of _unhandled_input()
+func _handleInput(_event):
 	return
 
 # Called each tick of _physics_process()
-func update(_delta):
+func _update(_delta):
 	return
