@@ -12,6 +12,7 @@
 position = Vector2( 187.929, 68.5372 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 111.489, 84.2441 )
 
 [node name="StatesStackDisplay" parent="." instance=ExtResource( 3 )]
 [connection signal="stateChanged" from="YSort/Player/StateMachine" to="StatesStackDisplay" method="_on_Player_stateChanged"]

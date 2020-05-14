@@ -1,4 +1,4 @@
-extends "res://world/scripts/state.gd"
+extends 'res://world/scripts/state.gd'
 
 func enter():
 	print('enter attack')

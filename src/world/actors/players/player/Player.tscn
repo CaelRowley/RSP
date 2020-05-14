@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://world/actors/players/player/player.gd" type="Script" id=1]
 [ext_resource path="res://world/actors/players/player/states/state-machine.gd" type="Script" id=2]
 [ext_resource path="res://world/actors/players/player/states/idle.gd" type="Script" id=3]
 [ext_resource path="res://world/actors/players/player/states/move.gd" type="Script" id=4]
 [ext_resource path="res://world/actors/players/player/states/attack.gd" type="Script" id=5]
+[ext_resource path="res://world/actors/players/player/sprites/player-idle.png" type="Texture" id=6]
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -21,3 +22,8 @@ script = ExtResource( 4 )
 
 [node name="Attack" type="Node" parent="StateMachine"]
 script = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -14.4872 )
+texture = ExtResource( 6 )
+hframes = 4

@@ -11,7 +11,7 @@ var currentState = null
 # Intialize state and connect stateFinished signals of all child states
 func _ready():
 	for child in get_children():
-		child.connect("stateFinished", self, "changeState")
+		child.connect('stateFinished', self, 'changeState')
 	initialize(initialState)
 
 # Pass user input event to the current state node
@@ -28,7 +28,7 @@ func initialize(newState):
 	statesStack.push_front(get_node(newState))
 	currentState = statesStack[0]
 	currentState.enter()
-	emit_signal("stateChanged", statesStack)
+	emit_signal('stateChanged', statesStack)
 	
 func setStatesMap(newStatesMap):
 	statesMap = newStatesMap
@@ -46,7 +46,7 @@ func changeState(newState):
 	if not isActive:
 		return
 	
-	if newState == "previous":
+	if newState == 'previous':
 		# Cannot access previous state if there is only 1 state
 		if statesStack.size() <= 1:
 			var error = str(
@@ -64,7 +64,7 @@ func changeState(newState):
 	currentState = statesStack[0]
 
 	# Should not call enter() when returning to a previous state
-	if newState != "previous":
+	if newState != 'previous':
 		currentState.enter()
 		
-	emit_signal("stateChanged", statesStack)
+	emit_signal('stateChanged', statesStack)
