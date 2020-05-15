@@ -196,8 +196,9 @@ blend_mode = 1
 states/Idle/node = SubResource( 13 )
 states/Idle/position = Vector2( 162, 109 )
 states/Move/node = SubResource( 18 )
-states/Move/position = Vector2( 338, 109 )
+states/Move/position = Vector2( 339, 109 )
 transitions = [ "Idle", "Move", SubResource( 19 ), "Move", "Idle", SubResource( 20 ) ]
+start_node = "Idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=22]
 
@@ -234,11 +235,12 @@ anims/MoveRight = SubResource( 7 )
 anims/MoveUp = SubResource( 8 )
 
 [node name="MoveSprite" type="Sprite" parent="."]
+visible = false
 position = Vector2( 0, -14 )
 texture = ExtResource( 7 )
 vframes = 4
 hframes = 12
-frame = 34
+frame = 25
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 21 )
