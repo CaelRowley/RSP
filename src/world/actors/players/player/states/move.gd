@@ -4,12 +4,6 @@ const MAX_SPEED = 100
 const ACCELERATION = 400
 const FRICTION = 400
 
-func enter():
-	print('enter move')
-
-func exit():
-	print('exit move')
-
 func _update(delta):
 	var inputVector = Vector2(
 		Input.get_action_strength('ui_right') - Input.get_action_strength('ui_left'),
