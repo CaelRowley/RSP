@@ -7,11 +7,13 @@ const FRICTION = 400
 func _handleInput(event):
 	if event.is_action_pressed("evade"):
 		emit_signal('stateFinished', 'evade')
+	if event.is_action_pressed("attack"):
+		emit_signal('stateFinished', 'attack')
 
 func _update(delta):
 	var inputVector = Vector2(
-		Input.get_action_strength('ui_right') - Input.get_action_strength('ui_left'),
-		Input.get_action_strength('ui_down') - Input.get_action_strength('ui_up')
+		Input.get_action_strength('move_right') - Input.get_action_strength('move_left'),
+		Input.get_action_strength('move_down') - Input.get_action_strength('move_up')
 	).normalized()
 
 	if inputVector == Vector2.ZERO:

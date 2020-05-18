@@ -13,8 +13,13 @@
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 111.489, 84.2441 )
 
+[node name="Sprite" parent="YSort/Player" index="0"]
+offset = Vector2( 0, 0 )
+frame = 160
+
 [node name="AnimationTree" parent="YSort/Player" index="2"]
 parameters/playback = SubResource( 1 )
+parameters/Attack/blend_position = Vector2( 0, 0 )
 parameters/Evade/blend_position = Vector2( 0, 0 )
 parameters/Move/blend_position = Vector2( 0, 0 )
 
