@@ -6,9 +6,6 @@ func _ready():
 	.setStatesMap({
 		'idle': $Idle,
 		'move': $Move,
+		'evade': $Evade,
 		'attack': $Attack,
 	})
-
-# Handle input here for stateless or state interrupting inputs
-func _unhandled_input(event):
-	._unhandled_input(event)

@@ -15,6 +15,9 @@ func exit():
 func _handleInput(_event):
 	return
 
+func _onAnimationFinished(_animName):
+	return
+
 # Called each tick of _physics_process()
 func _update(_delta):
 	return

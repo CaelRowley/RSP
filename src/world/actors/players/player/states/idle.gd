@@ -1,6 +1,7 @@
 extends 'res://world/scripts/state.gd'
 
 func enter():
+	owner.get_node("AnimationTree").set("parameters/Idle/blend_position", owner.direction)
 	owner.get_node("AnimationTree").get("parameters/playback").travel("Idle")
 
 func _handleInput(event):

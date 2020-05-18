@@ -10,17 +10,22 @@
 
 [node name="YSort" type="YSort" parent="."]
 
-[node name="Bush" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 187.929, 68.5372 )
-
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 111.489, 84.2441 )
 
-[node name="Sprite" parent="YSort/Player" index="0"]
-frame = 162
-
 [node name="AnimationTree" parent="YSort/Player" index="2"]
 parameters/playback = SubResource( 1 )
+parameters/Evade/blend_position = Vector2( 0, 0 )
+parameters/Move/blend_position = Vector2( 0, 0 )
+
+[node name="Bush" parent="YSort" instance=ExtResource( 1 )]
+position = Vector2( 187.929, 68.5372 )
+
+[node name="Bush2" parent="YSort" instance=ExtResource( 1 )]
+position = Vector2( 205.406, 84.4258 )
+
+[node name="Bush3" parent="YSort" instance=ExtResource( 1 )]
+position = Vector2( 157.344, 120.175 )
 
 [node name="StatesStackDisplay" parent="." instance=ExtResource( 3 )]
 [connection signal="stateChanged" from="YSort/Player/StateMachine" to="StatesStackDisplay" method="_on_Player_stateChanged"]

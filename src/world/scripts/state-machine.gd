@@ -21,7 +21,10 @@ func _unhandled_input(event):
 # Pass physics process to the current state node
 func _physics_process(delta):
 	currentState._update(delta)
-	
+
+# Pass signal callback to the current state node
+func _onAnimationFinished(animName):
+	currentState._onAnimationFinished(animName)
 
 func initialize(newState):
 	setIsActive(true)
@@ -29,7 +32,7 @@ func initialize(newState):
 	currentState = statesStack[0]
 	currentState.enter()
 	emit_signal('stateChanged', statesStack)
-	
+
 func setStatesMap(newStatesMap):
 	statesMap = newStatesMap
 
@@ -45,7 +48,7 @@ func setIsActive(value):
 func changeState(newState):
 	if not isActive:
 		return
-	
+
 	if newState == 'previous':
 		# Cannot access previous state if there is only 1 state
 		if statesStack.size() <= 1:
@@ -59,12 +62,12 @@ func changeState(newState):
 		statesStack.pop_front()
 	else:
 		statesStack[0] = statesMap[newState]
-	
+
 	currentState.exit()
 	currentState = statesStack[0]
 
 	# Should not call enter() when returning to a previous state
 	if newState != 'previous':
 		currentState.enter()
-		
+
 	emit_signal('stateChanged', statesStack)
