@@ -1,14 +1,14 @@
 extends Node
 
 # warning-ignore:unused_signal
-signal stateFinished(nextState)
+signal changeState(nextState)
 
 # Initialize the state. E.g. change the animation
-func enter():
+func _enter():
 	return
 
 # Clean up the state. Reinitialize values e.g. a timer
-func exit():
+func _exit():
 	return
 
 #  Called each tick of _unhandled_input()

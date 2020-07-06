@@ -6,9 +6,9 @@ const FRICTION = 400
 
 func _handleInput(event):
 	if event.is_action_pressed("evade"):
-		emit_signal('stateFinished', 'evade')
+		emit_signal('changeState', 'evade')
 	if event.is_action_pressed("attack"):
-		emit_signal('stateFinished', 'attack')
+		emit_signal('changeState', 'attack')
 
 func _update(delta):
 	var inputVector = Vector2(
@@ -21,7 +21,7 @@ func _update(delta):
 		owner.get_node("AnimationTree").set("parameters/Idle/blend_position", owner.direction)
 		owner.get_node("AnimationTree").get("parameters/playback").travel("Idle")
 		if owner.velocity == Vector2.ZERO:
-			emit_signal('stateFinished', 'idle')
+			emit_signal('changeState', 'idle')
 			return
 		owner.velocity = owner.velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 		owner.move_and_slide(owner.velocity)

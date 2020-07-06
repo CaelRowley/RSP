@@ -8,10 +8,10 @@ var statesStack = []
 var isActive = false setget setIsActive
 var currentState = null
 
-# Intialize state and connect stateFinished signals of all child states
+# Intialize state and connect changeState signals of all child states
 func _ready():
 	for child in get_children():
-		child.connect('stateFinished', self, 'changeState')
+		child.connect('changeState', self, 'changeState')
 	initialize(initialState)
 
 # Pass user input event to the current state node
@@ -30,7 +30,7 @@ func initialize(newState):
 	setIsActive(true)
 	statesStack.push_front(get_node(newState))
 	currentState = statesStack[0]
-	currentState.enter()
+	currentState._enter()
 	emit_signal('stateChanged', statesStack)
 
 func setStatesMap(newStatesMap):
@@ -63,11 +63,11 @@ func changeState(newState):
 	else:
 		statesStack[0] = statesMap[newState]
 
-	currentState.exit()
+	currentState._exit()
 	currentState = statesStack[0]
 
 	# Should not call enter() when returning to a previous state
 	if newState != 'previous':
-		currentState.enter()
+		currentState._enter()
 
 	emit_signal('stateChanged', statesStack)
